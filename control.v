@@ -1,11 +1,11 @@
 //=========================================================================
 // Name & Email must be EXACTLY as in Gradescope roster!
-// Name: 
-// Email: 
+// Name: Nicholas Castellanos
+// Email: ncast094@ucr.edu
 // 
-// Assignment name: 
-// Lab section: 
-// TA: 
+// Assignment name: Lab 3 - Datapath Control Unit
+// Lab section: 021
+// TA: Allan Knight
 // 
 // I hereby certify that I have not received assistance on this assignment,
 // or used code, from ANY outside source other than the instruction team
@@ -38,8 +38,47 @@ module control  (
 // ------------------------------
 // Insert your solution below
 // ------------------------------ 
-always @(instr_op)
-begin 
-   // Put your solution here
-end 
+always @(*) begin
+    // defaults
+    reg_dst    = 1'b0;
+    alu_src    = 1'b0;
+    mem_to_reg = 1'b0;
+    reg_write  = 1'b0;
+    mem_read   = 1'b0;
+    mem_write  = 1'b0;
+    branch     = 1'b0;
+    alu_op     = 2'b00;
+
+    case (instr_op)
+        6'b000000: begin // R-type
+            reg_dst   = 1'b1;
+            reg_write = 1'b1;
+            alu_op    = 2'b10;
+        end
+        6'b100011: begin // lw
+            alu_src    = 1'b1;
+            mem_to_reg = 1'b1;
+            reg_write  = 1'b1;
+            mem_read   = 1'b1;
+            alu_op     = 2'b00;
+        end
+        6'b101011: begin // sw
+            alu_src    = 1'b1;
+            mem_write  = 1'b1;
+            alu_op     = 2'b00;
+        end
+        6'b000100: begin // beq
+            branch = 1'b1;
+            alu_op  = 2'b01;
+        end
+        6'b001000: begin // addi
+            reg_dst   = 1'b0;
+            alu_src   = 1'b1;
+            reg_write = 1'b1;
+            alu_op    = 2'b00;
+        end
+        default: begin end
+    endcase
+end
+
 endmodule

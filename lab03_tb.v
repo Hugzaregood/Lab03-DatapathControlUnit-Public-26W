@@ -1,11 +1,11 @@
 //=========================================================================
 // Name & Email must be EXACTLY as in Gradescope roster!
-// Name: 
-// Email: 
+// Name: Nicholas Castellanos
+// Email: ncast094@ucr.edu
 // 
-// Assignment name: 
-// Lab section: 
-// TA: 
+// Assignment name: Lab 3 - Datapath Control Unit
+// Lab section: 021
+// TA: Allan Knight
 // 
 // I hereby certify that I have not received assistance on this assignment,
 // or used code, from ANY outside source other than the instruction team
@@ -150,6 +150,41 @@ module datapath_tb;
         // -------------------------------------------------------
         // More ALU Control Unit tests jere
         // -------------------------------------------------------
+        // Test Case 2: R-type (or)
+        $write("\tTest Case 2: R-type (or)  ...");
+        test_case(32'h00000025, 32'hFFFFFFFF, 32'h00000001, 1'b0, 32'hFFFFFFFF, 1'b1, 1'b0, 1'b0, 1'b0, 2'b10, 1'b0, 1'b0, 1'b1);
+
+        // Test Case 3: R-type (add)
+        $write("\tTest Case 3: R-type (add) ...");
+        test_case(32'h00000020, 32'hFFFFFFFF, 32'h00000001, 1'b1, 32'h00000000, 1'b1, 1'b0, 1'b0, 1'b0, 2'b10, 1'b0, 1'b0, 1'b1);
+
+        // Test Case 4: R-type (sub)
+        $write("\tTest Case 4: R-type (sub) ...");
+        test_case(32'h00000022, 32'hFFFFFFFF, 32'h00000001, 1'b0, 32'hFFFFFFFE, 1'b1, 1'b0, 1'b0, 1'b0, 2'b10, 1'b0, 1'b0, 1'b1);
+
+        // Test Case 5: R-type (slt)
+        $write("\tTest Case 5: R-type (slt) ...");
+        test_case(32'h0000002A, 32'hFFFFFFFF, 32'h00000001, 1'b0, 32'h00000001, 1'b1, 1'b0, 1'b0, 1'b0, 2'b10, 1'b0, 1'b0, 1'b1);
+
+        // Test Case 6: R-type (nor)
+        $write("\tTest Case 6: R-type (nor) ...");
+        test_case(32'h00000027, 32'hFFFFFFFF, 32'h00000001, 1'b1, 32'h00000000, 1'b1, 1'b0, 1'b0, 1'b0, 2'b10, 1'b0, 1'b0, 1'b1);
+
+        // Test Case 7: addi  
+        $write("\tTest Case 7: addi        ...");
+        test_case(32'h20000004, 32'hFFFFFFFB, 32'h00000004, 1'b0, 32'hFFFFFFFF, 1'b0, 1'b0, 1'b0, 1'b0, 2'b00, 1'b0, 1'b1, 1'b1);
+
+        // Test Case 8: lw
+        $write("\tTest Case 8: lw          ...");
+        test_case(32'h8C000020, 32'h000000FF, 32'h00000020, 1'b0, 32'h0000011F, 1'b0, 1'b0, 1'b1, 1'b1, 2'b00, 1'b0, 1'b1, 1'b1);
+
+        // Test Case 9: sw
+        $write("\tTest Case 9: sw          ...");
+        test_case(32'hAC000064, 32'h000000FF, 32'h00000064, 1'b0, 32'h00000163, 1'b0, 1'b0, 1'b0, 1'b0, 2'b00, 1'b1, 1'b1, 1'b0);
+
+        // Test Case 10: beq
+        $write("\tTest Case 10: beq        ...");
+        test_case(32'h10000025, 32'h000000FF, 32'h00000025, 1'b0, 32'h000000DA, 1'b0, 1'b1, 1'b0, 1'b0, 2'b01, 1'b0, 1'b0, 1'b0);
 
         // --------------------------------------------------------------
         // End testing
